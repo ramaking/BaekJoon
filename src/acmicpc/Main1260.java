@@ -65,6 +65,8 @@ public class Main1260 {
 		dfs(V);
 		System.out.println();
 		bfs(V);
+		
+		sc.close();
 
 	}
 }

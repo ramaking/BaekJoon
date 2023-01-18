@@ -1,6 +1,5 @@
 package acmicpc;
 
-import java.util.Arrays;
 
 public class Main2739 {
 
@@ -19,12 +18,6 @@ public class Main2739 {
         System.out.println(System.identityHashCode(str2));     //result:2008362258
         
         str2 = "qwe";
-        
-        String str3 = new String("string");
-        
-//        str3.
-        
-        String str4 = new String("string");
         
         
         System.out.println(str);
