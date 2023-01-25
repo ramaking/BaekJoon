@@ -24,6 +24,7 @@ public class Main6236 {
 	//최고 값은(higher) 은  
 
 	public static int lower = 0;
+	public static int higher = 0;
 
 	public static int N;
 
@@ -34,9 +35,6 @@ public class Main6236 {
 	
 
 	public static void binarySearch(){
-		// int lower = max;
-		int higher = 10000;
-		
 		
 		int middle = (lower + higher)/2;
 		
@@ -101,6 +99,7 @@ public class Main6236 {
 		for(int i = 0; i < N; i++){
 			st = new StringTokenizer(br.readLine());
 			arr[i] = Integer.parseInt(st.nextToken());
+			higher += arr[i];
 
 			//입력과정에서 lower 값을 저장
 			if(arr[i] > lower){
