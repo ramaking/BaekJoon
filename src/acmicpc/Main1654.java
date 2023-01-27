@@ -1,6 +1,5 @@
 package acmicpc;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main1654 {
@@ -69,6 +68,8 @@ public class Main1654 {
 		// Arrays.sort(arr);
 
 		System.out.println(binarySearch());
+		
+		sc.close();
 		
 
 

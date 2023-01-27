@@ -51,6 +51,8 @@ public class Main1920 {
 			System.out.println(binarySearch(sc.nextInt()));
 			
 		}
+		
+		sc.close();
 
 
     	

@@ -15,5 +15,7 @@ public class Main1085 {
 
 		int j = Math.min(y, h-y);
 		System.out.println(Math.min(i, j));
+		
+		sc.close();
 	}
 }

@@ -1,15 +1,9 @@
 package acmicpc;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Scanner;
-import java.util.StringTokenizer;
-import java.util.function.Consumer;
 
 class MyTree {
 	HashSet<Integer> tree;
