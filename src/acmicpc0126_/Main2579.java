@@ -9,30 +9,35 @@ public class Main2579 {
 		
 		int N = sc.nextInt();
 
-		int[] arr = new int[N+1];
-		for(int i = 1; i <= N; i++){
+		int[] arr = new int[N];
+		for(int i = 0; i < N; i++){
 			arr[i] = sc.nextInt(); 
 		}
 		
-		int [] jumpSum = new int[N+1];
-		int [] walkSum = new int[N+1];
+		int [] dp = new int[N];
 		
-		jumpSum[N] = jumpSum[N-1] = walkSum[N] = arr[N];
-		
-		walkSum[N-1] = arr[N-1] + arr[N];
-		
-		jumpSum[N-2] = arr[N] + arr[N-2];
-		
-		walkSum[N-2] = jumpSum[N-2];
-		
-		for(int i = N-3; i >= 0; i --) {
-			jumpSum[i] =Math.max(walkSum[i+2], jumpSum[i+2]) + arr[i];
+		if(N == 1) {
+			System.out.println(arr[0]);
+		} else if(N == 2) {
+			System.out.println(arr[0] + arr[1]);
+		} else {
+			dp[0] = arr[0];
+			dp[1] = arr[0] + arr[1];
+			dp[2] = Math.max(arr[0], arr[1]) + arr[2];
 			
-			walkSum[i] = jumpSum[i+1] + arr[i];
+			
+			for(int i = 3; i < dp.length; i++) {
+				dp[i] = Math.max(dp[i-2], dp[i-3] + arr[i-1]) + arr[i];
+			}
+			
+			System.out.println(dp[N-1]);
 		}
 		
-		System.out.println(Math.max(jumpSum[0], walkSum[0]));
 		
+		
+		
+		
+		sc.close();
 		
 		
 		
