@@ -39,7 +39,7 @@ public class Main1916 {
 			int b = Integer.parseInt(st.nextToken());
 			int c = Integer.parseInt(st.nextToken());
 			
-			list.get(a).get(b).setDistance(c);
+			list.get(a).add(new Node(b, c));
 		}
 		
 		StringTokenizer st = new StringTokenizer(br.readLine());
@@ -47,13 +47,13 @@ public class Main1916 {
 		int start = Integer.parseInt(st.nextToken());
 		int end = Integer.parseInt(st.nextToken());
 		
-		dijstra(start);
+		dijkstra(start);
 		
-		
+		System.out.println(distance[end]);
 		
 	}
 	
-	static void dijstra(int start) {
+	static void dijkstra(int start) {
 		distance[start] = 0;
 		PriorityQueue<Node> queue = new PriorityQueue<>();
 		queue.add(new Node(start, 0));
@@ -65,8 +65,19 @@ public class Main1916 {
 			Node node = queue.poll();
 			int index = node.getIndex();
 			int dis = node.getDistance();
+			
+			//꺼낸 값이 의미 없으면 넘김
+			if(distance[index] < dis) {
+				continue;
+			}
+			
 			for(int i = 0; i < list.get(index).size(); i++) {
 				int cost = distance[index] + list.get(index).get(i).getDistance();
+				int nIndex = list.get(index).get(i).getIndex();
+				if(distance[nIndex] > cost) {
+					distance[nIndex] = cost;
+					queue.add(new Node(nIndex, cost));
+				}
 			}
 		}
 		
@@ -97,7 +108,7 @@ public class Main1916 {
 		@Override
 		public int compareTo(Node o) {
 			// TODO Auto-generated method stub
-			return 0;
+			return this.distance - o.getDistance();
 		}
 		
 		
