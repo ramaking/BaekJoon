@@ -87,10 +87,6 @@ public class Main1504 {
 		PriorityQueue<Node> queue = new PriorityQueue<>();
 		distance[start] = 0;
 		queue.offer(new Node(start, 0));
-//		//처음 노드 기준으로 큐에 담음
-//		for(int i = 0; i < list.get(start).size(); i++) {
-//			queue.offer(list.get(start).get(i));
-//		}
 
 		while (!queue.isEmpty()) {
 			// 가장 가까운 노드를 꺼내서 확인
@@ -116,9 +112,7 @@ public class Main1504 {
 			}
 
 			for (int i = 1; i <= n; i++) {
-//				System.out.print(i + " : " + distance[i] + " |");
 			}
-//			System.out.println();
 		}
 
 		if (distance[end] == mInt) {
