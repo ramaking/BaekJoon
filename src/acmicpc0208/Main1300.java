@@ -13,7 +13,7 @@ public class Main1300 {
 		int start = 1;
 		int end = k;
 		int middle = (start+end)/2;
-		while(start > end) {
+		while(start <= end) {
 
 			middle = (start+end)/2;
 			int sum = 0;
@@ -22,15 +22,21 @@ public class Main1300 {
 			}
 			
 			if(sum >= k) {
-				start = middle + 1;
+				end = middle - 1;
 			}
 			
 			if(sum < k) {
-				end = middle -1;
+				start = middle +1;
 			}
+			
+//			if(sum == k) {
+//				break;
+//			}
+
+//			System.out.println("start : " + start + "     end : " + end + "    sum : " + sum + "    middle : " + middle);
 		}
 		
-		System.out.println(middle);
+		System.out.println(start);
 	}
 
 }

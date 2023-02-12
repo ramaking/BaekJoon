@@ -16,9 +16,9 @@ public class Main1676 {
 		int n = Integer.parseInt(st.nextToken());
 		int temp = n;
 		int sum = 0;
-		while((temp%5 == 0) && (temp/5 != 0)) {
+		while(temp >= 5) {
+			sum += temp/5;
 			temp /= 5;
-			sum ++;
 		}
 		
 		System.out.println(sum);
