@@ -138,6 +138,29 @@ public class Main16935 {
 			pn = tempNum;
 		}
 	}
+	
+	
+	static void rote5() {
+		int[] di = {0,1,0,-1};
+		int[] dj = {1,0,-1,0};
+		for (int r1 = 0; r1 < r; r1++) {
+
+			temp = new int[n][m];
+			
+			for (int i = 0; i < n/2; i++) {
+				for (int j = 0; j < m/2; j++) {
+					int temp = arr[i][j];
+					for(int k = 0; k < 4; k++) {
+						
+					}
+				}
+			}
+
+			arr = new int[n][m];
+			arrCopy();
+		}
+	}
+	
 
 	static void arrCopy() {
 		
