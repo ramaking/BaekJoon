@@ -26,12 +26,38 @@ public class Main5639 {
 			if(temp == null || temp.equals("")) {
 				break;
 			} else {
-				selectNode(Integer.parseInt(temp));
+				
+				selectNode2(firstNode, Integer.parseInt(temp));
 			}
 		}
 		
 		postOrder(firstNode);
 
+		
+	}
+	
+	
+	
+	
+	static void selectNode2(Node node, int key) {
+		
+		if(node.key > key) {
+			if(node.left != null) {
+				selectNode2(node.left, key);
+			} else {
+				Node newNode = new Node();
+				newNode.key = key;
+				node.left = newNode;
+			}
+		} else if(node.key < key) {
+			if(node.right != null) {
+				selectNode2(node.right, key);
+			} else {
+				Node newNode = new Node();
+				newNode.key = key;
+				node.right = newNode;
+			}
+		}
 		
 	}
 	

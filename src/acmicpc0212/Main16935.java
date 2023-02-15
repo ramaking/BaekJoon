@@ -10,7 +10,6 @@ import java.util.StringTokenizer;
 public class Main16935 {
 
 	static int n, m, r, num;
-	static int cn, cm, pn, pm;
 	static int[][] arr;
 	static int[][] temp;
 
@@ -23,13 +22,7 @@ public class Main16935 {
 		n = Integer.parseInt(st.nextToken());
 		m = Integer.parseInt(st.nextToken());
 		r = Integer.parseInt(st.nextToken());
-		
-		cn = n;
-		cm = m;
 
-		pn = n;
-		pm = m;
-//		dir = Math.max(n, m);
 
 		arr = new int[n][m];
 
@@ -41,138 +34,141 @@ public class Main16935 {
 			}
 		}
 
-		num = Integer.parseInt(br.readLine());
+		st = new StringTokenizer(br.readLine());
+		while (st.hasMoreTokens()) {
+			num = Integer.parseInt(st.nextToken());
 
-		switch (num) {
-		case 1:
-			mirrir1();
-			break;
-		case 2:
-			mirrir2();
-			break;
-		case 3:
-			rote3();
-			break;
-		case 4:
-			rote4();
-			break;
-		case 5:
+			switch (num) {
+			case 1:
+				mirrir1();
+				break;
+			case 2:
+				mirrir2();
+				break;
+			case 3:
+				rote3();
+				break;
+			case 4:
+				rote4();
+				break;
+			case 5:
+				rote5();
+				break;
+			case 6:
+				rote6();
+				break;
 
-			break;
-		case 6:
-
-			break;
-
+			}
 		}
 
 		print();
 
 	}
-	
+
+	//상하반전
 	static void mirrir1() {
-		for (int r1 = 0; r1 < r; r1++) {
-			temp = new int[n][m];
-			for (int i = 0; i < n; i++) {
-				for (int j = 0; j < m; j++) {
-					temp[n - i - 1][j] = arr[i][j];
-				}
-
+		temp = new int[n][m];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				temp[n - i - 1][j] = arr[i][j];
 			}
-			arr = new int[n][m];
-			arrCopy();
 		}
-
+		arr = new int[n][m];
+		arrCopy();
 	}
 
+	//좌우반전
 	static void mirrir2() {
-		for (int r1 = 0; r1 < r; r1++) {
-			temp = new int[n][m];
-			for (int i = 0; i < n; i++) {
-				for (int j = 0; j < m; j++) {
-					temp[i][m - j - 1] = arr[i][j];
-				}
-
+		temp = new int[n][m];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				temp[i][m - j - 1] = arr[i][j];
 			}
-			arr = new int[n][m];
-			arrCopy();
 		}
+		arr = new int[n][m];
+		arrCopy();
 
 	}
 
+	//시계회전
 	static void rote3() {
-		for (int r1 = 0; r1 < r; r1++) {
 
-			cn = pm;
-			cm = pn;
-			temp = new int[cn][cm];
-			for (int i = 0; i < cm; i++) {
-				for (int j = 0; j < cn; j++) {
-					temp[j][cm - i - 1] = arr[i][j];
-				}
+		//가로 세로 반전
+		int tempNum = n;
+		n = m; 
+		m = tempNum;
+		temp = new int[n][m];
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				temp[j][m - i - 1] = arr[i][j];
 			}
-
-			arr = new int[cn][cm];
-			arrCopy();
-			int tempNum = pm;
-			pm = pn;
-			pn = tempNum;
 		}
+		arr = new int[n][m];
+		arrCopy();
+
 	}
 
+	//반시계회전
 	static void rote4() {
-		for (int r1 = 0; r1 < r; r1++) {
 
-			cn = pm;
-			cm = pn;
-			temp = new int[cn][cm];
-			for (int i = 0; i < cm; i++) {
-				for (int j = 0; j < cn; j++) {
-					temp[cn - j - 1][i] = arr[i][j];
-				}
+		//가로 세로 반전
+		int tempNum = n;
+		n = m; 
+		m = tempNum;
+		temp = new int[n][m];
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				temp[n - j - 1][i] = arr[i][j];
 			}
-
-			arr = new int[cn][cm];
-			arrCopy();
-			int tempNum = pm;
-			pm = pn;
-			pn = tempNum;
 		}
+		arr = new int[n][m];
+		arrCopy();
+
 	}
-	
-	
+
+	//시계 단위 회전
 	static void rote5() {
-		int[] di = {0,1,0,-1};
-		int[] dj = {1,0,-1,0};
-		for (int r1 = 0; r1 < r; r1++) {
 
-			temp = new int[n][m];
-			
-			for (int i = 0; i < n/2; i++) {
-				for (int j = 0; j < m/2; j++) {
-					int temp = arr[i][j];
-					for(int k = 0; k < 4; k++) {
-						
-					}
-				}
+		temp = new int[n][m];
+		for (int i = 0; i < n / 2; i++) {
+			for (int j = 0; j < m / 2; j++) {
+				int temp = arr[i][j];
+				arr[i][j] = arr[i + n / 2][j];
+				arr[i + n / 2][j] = arr[i + n / 2][j + m / 2];
+				arr[i + n / 2][j + m / 2] = arr[i][j + m / 2];
+				arr[i][j + m / 2] = temp;
 			}
-
-			arr = new int[n][m];
-			arrCopy();
 		}
-	}
-	
 
+	}
+
+	//반시계 단위 회전
+	static void rote6() {
+
+		temp = new int[n][m];
+		for (int i = 0; i < n / 2; i++) {
+			for (int j = 0; j < m / 2; j++) {
+				int temp = arr[i][j];
+				arr[i][j] = arr[i][j + m / 2];
+				arr[i][j + m / 2] = arr[i + n / 2][j + m / 2];
+				arr[i + n / 2][j + m / 2] = arr[i + n / 2][j];
+				arr[i + n / 2][j] = temp;
+			}
+		}
+
+	}
+
+	//배열 카피
 	static void arrCopy() {
-		
-		for (int i = 0; i < cn; i++) {
-			
-			for (int j = 0; j < cm; j++) {
-				
+
+		for (int i = 0; i < temp.length; i++) {
+			for (int j = 0; j < temp[0].length; j++) {
 				arr[i][j] = temp[i][j];
 			}
 		}
 	}
 
+	//출력
 	static void print() {
 		for (int i = 0; i < arr.length; i++) {
 			for (int j = 0; j < arr[0].length; j++) {
