@@ -4,12 +4,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main1707 {
 
 	static ArrayList<Integer>[] list;
 	static boolean[] visited;
+	static int[] numArr;
 	static boolean isLoop;
 	static int V;
 
@@ -29,6 +31,7 @@ public class Main1707 {
 				list[i] = new ArrayList<>();
 			}
 			visited = new boolean[V + 1];
+			numArr = new int[V+1];
 
 			isLoop = false;
 
@@ -51,7 +54,7 @@ public class Main1707 {
 					break;
 				}
 				if (!visited[i]) {
-					dfs(i);
+					dfs(i, 0);
 				}
 			}
 
@@ -65,36 +68,31 @@ public class Main1707 {
 
 	}
 
-	static void dfs(int index) {
+
+
+	static void dfs(int index, int cnt) {
 		if (isLoop) {
 			return;
 		}
-		System.out.println("방문노드 : " + index);
+		
+//		System.out.println("방문노드 : " + index);
 		if (visited[index]) {
-			isLoop = true;
-			return;
+//			System.out.println(numArr[index] + " " + cnt);
+//			System.out.println((numArr[index] - cnt) % 2);
+			if((cnt - numArr[index]) % 2 == 1) {
+				isLoop = true;
+				return;
+			}
 		}
+		numArr[index] = cnt;
 		visited[index] = true;
 
-		// 그래프 간 노드가 두개?
-		// A => B , B => A 는?
-
-//		for(int i = 0; i < list[index].size(); i++) {
-//			int to = list[index].get(i);
-//			if(used[index][to]) {
-//				used[index][to] = false;
-//				used[to][index] = false;
-//				dfs(to);
-//			}
-//				
-//		}
-
 		for (int i = 0; i < list[index].size(); i++) {
-			int to = list[index].get(i);
-//			list[index].remove(0);
-//			int temp = list[to].indexOf(index);
-//			list[to].remove(temp);
-			dfs(to);
+			int to = list[index].get(0);
+			list[index].remove(0);
+			int temp = list[to].indexOf(index);
+			list[to].remove(temp);
+			dfs(to, cnt+1);
 		}
 
 //		while (!list[index].isEmpty()) {
