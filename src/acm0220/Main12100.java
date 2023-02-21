@@ -3,6 +3,7 @@ package acm0220;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
@@ -50,10 +51,6 @@ public class Main12100 {
 				swip(card[i]);
 				
 			}
-			
-//			//합계 연산
-//			count();
-			
 			return;
 		}
 		
@@ -72,22 +69,14 @@ public class Main12100 {
 	}
 	
 	static void swip(int swipNum) {
-		System.out.println("11");
-		print();
 		//그 방향에 맞게 돌리기
 		for(int i = 0;  i< swipNum; i++) {
 			rotate();
 		}
-		System.out.println("22");
-
-		print();
-		
+//		
 		//밀기
 		push();
 		
-		System.out.println("33");
-
-		print();
 		
 		//원래 방향에 맞게 돌려놓기
 		if(swipNum != 0) {	//0이면 안돌려도 됨..
@@ -120,42 +109,54 @@ public class Main12100 {
 	//아래로 내리는 기능
 	static void push() {
 		Queue<Integer> queue = new LinkedList<>();
-		int tempNum = 0;
+		
 		for(int j = 0; j < n; j++) {
-			
+			int tempNum = 0;
+			//열 별로 진행
 			for(int i = n-1; i >= 0; i--) {
+				
+				//0이 아닌 다른 값이 왔을 때
 				if(temp[i][j] != 0) {
-//					System.out.println(temp[i][j]);
-					//전 값과 합쳐짐
+					
+					//이전과 같은 값이면 합침
 					if(tempNum == temp[i][j]) {
 						queue.add(tempNum*2);
 						tempNum = 0;
 						
-					} else {	//전 값과 다름
-						if(tempNum != 0) {
-							queue.add(tempNum);
-							tempNum = temp[i][j];
+					} else {	//다른 값이면 이전 값을 큐에 넣고 새로운 값을 가짐
+						
+						if(tempNum == 0) {	//이전 값이 0이면 새로운 값만 가짐
 						} else {
-							tempNum = temp[i][j];
+							queue.add(tempNum);
 						}
 						
+						tempNum = temp[i][j];
+
 					}
+					
+					//값을 0으로 채움
 					temp[i][j] = 0;
 				}
+				
 			}
+			
+			//열 연산이 끝나고 남아있는 값이 0이 아니라면 큐에 넣음
 			if(tempNum != 0)
 				queue.add(tempNum);
+//			System.out.println(Arrays.toString(queue.toArray(new Integer[queue.size()])));
 			
 			
-			for(int k = 0; k < queue.size(); k++) {
+			//큐에 있는 값을 아래서 부터 출력함
+			int size = queue.size();
+			for(int i = 0; i < size; i++) {
 				int pollNum = queue.poll();
-				
-				temp[n-1-k][j] = pollNum;
+				temp[n-i-1][j] = pollNum;
 				if(max < pollNum) {
 					max = pollNum;
 				}
-				
 			}
+			
+			
 			
 		}
 		

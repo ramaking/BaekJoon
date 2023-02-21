@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-//1. 각 승 패는 자신 이외의 짝이 있어야한다.
-//2. 무는 자신이외의 짝이 있어야한다.
 
 public class Main6987_2 {
 
@@ -29,6 +27,7 @@ public class Main6987_2 {
 				score[j][1] = b;
 				int c = Integer.parseInt(st.nextToken());
 				score[j][2] = c;
+				
 				if(a == 6 || b == 6 || c == 6) {
 					end =true;
 					break;
@@ -39,7 +38,8 @@ public class Main6987_2 {
 				
 			}
 
-			back(0,1);
+			if(!end)
+				back(0,1);
 
 			if (isValid) {
 				System.out.print(1 + " ");
@@ -47,24 +47,22 @@ public class Main6987_2 {
 				System.out.print(0 + " ");
 			}
 
-			// 유효성 검사
 
 		}
 
 	}
 
+	//다음 나라는 이전 나라를 확인할 필요 없음
 	static void back(int country, int nCoun){
-		
+		//한번이라도 유효하면 다음은 검증할 필요없음
 		if(isValid) {
 			return;
 		}
 		if(nCoun == 6) {
 			
 			if(country == 5) {
-				
 				if(check()) {
 					isValid = true;
-					
 				}
 				return;
 			}
@@ -104,6 +102,7 @@ public class Main6987_2 {
 		
 	}
 
+	//디버깅용..
 	static void print() {
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 3; j++) {
@@ -114,6 +113,7 @@ public class Main6987_2 {
 		System.out.println("----------------------");
 	}
 
+	//마지막 체크용..
 	static boolean check() {
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 3; j++) {
