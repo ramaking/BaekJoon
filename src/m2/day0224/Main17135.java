@@ -59,7 +59,7 @@ public class Main17135 {
 
 			return;
 		}
-		for (int i = index; i < n; i++) {
+		for (int i = index; i < m; i++) {
 			card[cnt] = i;
 			comb(cnt + 1, i + 1);
 		}
@@ -104,6 +104,7 @@ public class Main17135 {
 			if (temp[ti][tj] == 1) {
 				temp[ti][tj] = 0;
 				killCnt++;
+//				print();
 			}
 		}
 
@@ -147,7 +148,7 @@ public class Main17135 {
 					if (ni >= 0 && ni < n && nj >= 0 && nj < m && !visited[ni][nj]) {
 						if (temp[ni][nj] == 1) {
 							killList.add(new int[] { ni, nj });
-
+							
 							return;
 						} else {
 							queue.add(new int[] { ni, nj });

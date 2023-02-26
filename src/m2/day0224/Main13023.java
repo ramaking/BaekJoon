@@ -11,8 +11,7 @@ public class Main13023 {
 	static int n, m;
 	static ArrayList<Integer>[] list;
 	static boolean[] visited;
-	static int[] distance;
-	
+	static int sum;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -21,12 +20,13 @@ public class Main13023 {
 		n = Integer.parseInt(st.nextToken());
 		m = Integer.parseInt(st.nextToken());
 		list = new ArrayList[n];
-		visited = new boolean[n];
+		
+		
 		for (int i = 0; i < n; i++) {
 			list[i] = new ArrayList<Integer>();
 		}
+
 		
-		distance = new int[n];
 
 		int from, to;
 		for (int i = 0; i < m; i++) {
@@ -38,18 +38,16 @@ public class Main13023 {
 		}
 
 		boolean isParty = false;
-		
-		
-		//dfs : 한번이라도 5이상 나오면 종료
-		for(int i = 0; i < n; i++) {
+
+		// dfs : 한번이라도 5이상 나오면 종료
+		for (int i = 0; i < n; i++) {
+			sum = 0;
 			visited = new boolean[n];
-			if(dfs(i, 1)) {
+			if (dfs(i, 1)) {
 				isParty = true;
 				break;
-			} 
+			}
 		}
-		
-		
 
 		if (isParty)
 			System.out.println(1);
@@ -59,17 +57,22 @@ public class Main13023 {
 	}
 
 	private static boolean dfs(int maxIdx, int cnt) {
+//		System.out.println(maxIdx + " : " + cnt);
 		visited[maxIdx] = true;
-		if(cnt == 5) {
+		if (cnt == 5) {
 			return true;
 		}
-		for(int next : list[maxIdx]) {
-			if(!visited[next])
-				if(dfs(next, cnt +1)) {
+		for (int i : list[maxIdx]) {
+			if (!visited[i] ) {
+				if (dfs(i, cnt+1)) {
 					return true;
 				}
+				visited[i] = false;
+				
+			}
+			
 		}
-		
+
 		return false;
 	}
 
