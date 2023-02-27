@@ -4,10 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Queue;
+import java.util.Stack;
 import java.util.StringTokenizer;
 
 public class Main16637 {
@@ -18,7 +17,8 @@ public class Main16637 {
 	static boolean tempVisited[];
 	static char[] expre;
 	static int max = Integer.MIN_VALUE;
-	static Queue<String> queue = new ArrayDeque<>();
+	static Stack<Integer> stack = new Stack<>();
+	static ArrayDeque<Integer> deq = new ArrayDeque<>();
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -29,85 +29,94 @@ public class Main16637 {
 
 		expre = br.readLine().toCharArray();
 
-		subSet(0, 0);
+		subSet(1);
 
 		System.out.println(max);
 	}
 
-	static void subSet(int cnt, int isOdd) {
-		// 짝수개의 괄호만 연산 진행
-		if (cnt == n + 1) {
-			if (isOdd % 2 == 0) {
-				System.out.println(Arrays.toString(visited));
-				tempVisited = visited.clone();
-////				setExpre(0, n);
-				max = Math.max(max, setExpre(0, n));
-			}
+	static void subSet(int cnt) {
+		if (cnt == n) {
 
+//			System.out.println(Arrays.toString(visited));
+			tempVisited = visited.clone();
+			max = Math.max(max, setExpre(0, n));
+			
 			return;
 		}
 
-		visited[cnt] = true;
-		subSet(cnt + 2, isOdd + 1);
-
-		visited[cnt] = false;
-		subSet(cnt + 2, isOdd);
+		if (cnt - 2 >= 0) {
+			if (!visited[cnt - 2]) {
+				visited[cnt] = true;
+				subSet(cnt + 2);
+				visited[cnt] = false;
+				subSet(cnt + 2);
+			} else {
+				visited[cnt] = false;
+				subSet(cnt + 2);
+			}
+		} else {
+			visited[cnt] = true;
+			subSet(cnt + 2);
+			visited[cnt] = false;
+			subSet(cnt + 2);
+		}
 
 	}
 
+
 	private static int setExpre(int startIdx, int endIdx) {
-//		System.out.println(Arrays.toString(tempVisited));
-//		System.out.println(startIdx + " : " + endIdx);
-		int result = 0;
-		int curVal = 0;
-		int nexIdx = 0;
-		if(endIdx - startIdx == 1) {
-			return expre[startIdx]-'0';
-		}
+//		System.out.println(Arrays.toString(expre));
 		for (int i = startIdx; i < endIdx; i++) {
-			
-//			if (tempVisited[i]) {
-//				tempVisited[i] = false;
-//
-//				for (int j = i; j < endIdx; j++) {
-//					if (tempVisited[j]) {
-//						tempVisited[j] = false;
-//						curVal = setExpre(i, j + 1);
-//						System.out.println("cur3 : "+curVal);
-//						nexIdx = j + 1;
-//						break;
-//					}
-//				}
-//			} else {
-				nexIdx = i;
 
-				if(expre[i] == '+' || expre[i] == '-' || expre[i] == '*') {
-					
-				} else {
-					curVal = expre[i] - '0';
-					System.out.println("cur1 : "+curVal);
+			if (tempVisited[i]) {
+				int num1 = deq.pollLast();
+				
+				int num2 = expre[i+1]-'0';
+				if (expre[i] == '+') {
+					deq.add(num1+num2);
+				} else if (expre[i] == '-') {
+					deq.add(num1-num2);
+				} else if (expre[i] == '*') {
+					deq.add(num1*num2);
 				}
+				i = i+1;
 				
+			} else {
 
-				
-//			}
-
-			if (expre[i] == '+') {
-				// 결과 + 현재
-				result = curVal + setExpre(i+1, endIdx);
-				System.out.println("cur2 : "+curVal);
-				System.out.println("res : "+result);
-			} else if (expre[i] == '-') {
-				result = curVal - setExpre(i+1, endIdx);
-			} else if (expre[i] == '*') {
-				result = curVal * setExpre(i+1, endIdx);
+				if (expre[i] == '+') {
+					deq.add(-1);
+				} else if (expre[i] == '-') {
+					deq.add(-2);
+				} else if (expre[i] == '*') {
+					deq.add(-3);
+				} else {
+					deq.add(expre[i] - '0');
+				}
 			}
-			curVal = result;
-
-			i = nexIdx;
 
 		}
-		System.out.println("result : "+result);
+
+		int result = stackCulc();
+
+		return result;
+	}
+	
+	private static int stackCulc() {
+		if (deq.isEmpty()) {
+			return 0;
+		}
+		int result = deq.poll();
+		while (!deq.isEmpty()) {
+			int temp = deq.poll();
+
+			if (temp == -1) {
+				result += deq.poll();
+			} else if (temp == -2) {
+				result -= deq.poll();
+			} else if (temp == -3) {
+				result *= deq.poll();
+			}
+		}
 		return result;
 	}
 
