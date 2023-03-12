@@ -16,34 +16,34 @@ public class Main_1541 {
 		
 		boolean findMinus = false;
 		int sum = 0;
-		int tempSum = 0;
 		StringBuilder sb = new StringBuilder();
-		char lastEx = '/';
 		for(int i = 0; i < line.length(); i++) {
 			if(line.charAt(i) == '-' && findMinus) {
-				//다음 마이너스 찾을 때 까지 더하고 빼기
-				sum -= tempSum;
-				lastEx = '-';
-			}else if(line.charAt(i) == '-' && !findMinus) {
-				findMinus = true;
-				tempSum = 0;
-				lastEx = '-';
+				sum -= Integer.parseInt(sb.toString());
+				sb.delete(0, sb.length());
 				
-			}else if(line.charAt(i) == '+' && findMinus) {
-				lastEx = '+';
-			}else if(line.charAt(i) == '+' && !findMinus) {
-				lastEx = '+';
+			} else if(line.charAt(i) == '-' && !findMinus) {
+				sum += Integer.parseInt(sb.toString());
+				sb.delete(0, sb.length());
+				findMinus = true;
+			} else if(line.charAt(i) == '+' && findMinus) {
+				sum -= Integer.parseInt(sb.toString());
+				sb.delete(0, sb.length());
+			} else if(line.charAt(i) == '+' && !findMinus) {
+				sum += Integer.parseInt(sb.toString());
+				sb.delete(0, sb.length());
 			} else {
 				sb.append(line.charAt(i));
 			}
 		}
 		
-		if(lastEx == '-') {
-			
-		} else if(lastEx == '+') {
-			
+		if(findMinus) {
+			sum -= Integer.parseInt(sb.toString());
+		} else {
+			sum += Integer.parseInt(sb.toString());
 		}
 		
+		System.out.println(sum);
 	}
 
 }
