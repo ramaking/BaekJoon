@@ -1,4 +1,4 @@
-package m3.day0310;
+package m3.day0315;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,12 +6,13 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public class Main_11438 {
+public class Main_1761 {
 	static int N;
-	static ArrayList<Integer>[] list;
+	static ArrayList<int[]>[] list;
 	static int[] depth;
 	static boolean[] visited;
 	static int[][] dp;
+	static int[][] distance;
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		N = Integer.parseInt(br.readLine());
@@ -20,6 +21,7 @@ public class Main_11438 {
 		depth = new int[N+1];
 		visited = new boolean[N+1];
 		dp = new int[N+1][30];
+		distance = new int[N+1][30];
 		for(int i = 1; i <= N; i++) {
 			list[i] = new ArrayList<>();
 		}
@@ -28,9 +30,10 @@ public class Main_11438 {
 			st = new StringTokenizer(br.readLine());
 			int from = Integer.parseInt(st.nextToken());
 			int to = Integer.parseInt(st.nextToken());
+			int dis = Integer.parseInt(st.nextToken());
 
-			list[from].add(to);
-			list[to].add(from);
+			list[from].add(new int[] {to, dis});
+			list[to].add(new int[] {from, dis});
 		}
 		
 		dfs(1, 0);
@@ -59,8 +62,13 @@ public class Main_11438 {
 		
 		for (int i = 0; i < M; i++) {
 			st = new StringTokenizer(br.readLine());
-			sb.append(lca(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())));
-			sb.append("\n");
+			int u = Integer.parseInt(st.nextToken());
+			int v = Integer.parseInt(st.nextToken());
+			int dest = lca(u, v);
+			int dis1 = getDis(u, dest);
+			int dis2 = getDis(v, dest);
+			sb.append(dis1 + dis2).append("\n");
+
 		}
 		
 		System.out.println(sb.toString());
@@ -68,6 +76,23 @@ public class Main_11438 {
 	}
 	
 	
+	private static int getDis(int u, int dest) {
+		int sum = 0;
+		int current = u;
+		int diff = depth[current] - depth[dest];
+		
+		for(int i = 0; diff != 0; i++) {
+			if((diff & 1) == 1) {
+				sum += distance[current][i];
+				current = dp[current][i];
+				
+			}
+			diff >>= 1;
+		}
+		return sum;
+	}
+
+
 	private static int lca(int u, int v) {
 		if(depth[u] < depth [v]) {
 			int temp = u;
@@ -103,6 +128,7 @@ public class Main_11438 {
 		for(int j = 1; j < 30; j++) {
 			for(int i = 1; i <= N; i++) {
 				dp[i][j] = dp[dp[i][j-1]][j-1];
+				distance[i][j] = distance[i][j-1] + distance[dp[i][j-1]][j-1];
 			}
 		}
 	}
@@ -113,9 +139,10 @@ public class Main_11438 {
 		visited[index] = true;
 		depth[index] = depthNum;
 		for(int i = 0; i < list[index].size(); i++) {
-			if(!visited[list[index].get(i)]) {
-				dp[list[index].get(i)][0] = index;
-				dfs(list[index].get(i), depthNum+1);
+			if(!visited[list[index].get(i)[0]]) {
+				distance[list[index].get(i)[0]][0] = list[index].get(i)[1];
+				dp[list[index].get(i)[0]][0] = index;
+				dfs(list[index].get(i)[0], depthNum+1);
 			}
 			
 		}
