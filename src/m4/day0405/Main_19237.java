@@ -8,13 +8,19 @@ import java.util.StringTokenizer;
 import javax.xml.transform.Source;
 
 /*
- * 내려가는 것만 고려해서 경우의 수를 줄임
- * 이전에 비해 하나 내려가면 길이 유지 확인
- * 유효한 부분은 true 로 만들기
+ * 움직이는 상어의 순서는 상관없고 그냥 먼저 찾는 상어 가 움직이면 됨
+ * 모든 상어 냄새 1씩 빼기
+ * 상어 이동
+ * 	1. 우선순위에 따라 보면서 빈칸이 있으면 가고 없으면 다시 보면서 가장 높은 우선순위의 자기 냄새로 이동
+ * 
+ * temp 배열을 만들고 거기로 이동
+ * 상어 이동이 전부 끝나면 겹친 상어 제거
+ * 1. 상어 냄새 남기기
+ * 
  * 
  */
 
-public class Main_14890 {
+public class Main_19237 {
 	static int[][] map; // 초기값
 	static boolean[][] alreadyIUse; // 상어 이동에 사용될 임시
 	static boolean[][] alreadyJUse; // 상어 이동에 사용될 임시
