@@ -32,27 +32,28 @@ public class Main_2531 {
 		}
 
 		int max = 0;
-		int count = 0;
+		int count = 1;
+		getDish[c]++;
+		
+		for (int i = 0; i < k; i++) {
+			getDish[dish[i]]++;
+			if (getDish[dish[i]] == 1) {
+				count++;
+			}
+		}
+		
+		max = count;
 
-		for (int i = 0; i < n + k; i++) {
-			getDish[dish[(i) % n]]++;
-			if (getDish[dish[(i) % n]] == 1) {
+		for (int i = 1; i < n; i++) {
+			getDish[dish[i-1]]--;
+			if (getDish[dish[i-1]] == 0)
+				count--;
+			
+			getDish[dish[(i+k-1) % n]]++;
+			if (getDish[dish[(i+k-1) % n]] == 1) {
 				count++;
 			}
 
-			if (i >= k) {
-				if (i > k) {
-					getDish[dish[i - k]]--;
-					if (getDish[dish[i - k]] == 0)
-						count--;
-				}
-
-				if (getDish[c] == 0) {
-					if (max < count + 1) {
-						max = count + 1;
-					}
-				}
-			}
 
 			if (max < count) {
 				max = count;
