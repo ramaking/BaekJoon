@@ -26,7 +26,7 @@ import java.util.StringTokenizer;
  * 
  */
 
-public class Main_19237 {
+public class Main_19237_어른상어 {
 	static int[][] map; // 초기값
 	static Smell[][] smell;
 	static int n, m, k;
