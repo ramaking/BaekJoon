@@ -3,6 +3,8 @@ package m4.day0405;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 
@@ -46,11 +48,14 @@ public class Main_21611 {
 			int cnt = 0;
 			int num = 1;
 			int d = 0;
-			int postNum = 0;
-			int postNumCount = 0;
+			int pNum = 0;
+			int pNumCount = 0;
 			int cNum = 0;
 			int cNumCount = 0;
 			boolean isEnd = false;
+			Queue<Integer> queue = new ArrayDeque<>();
+			
+			
 			while(true) {
 				if(isEnd) break;
 				//큐에 담으면서 연속된 값 찾기
@@ -61,8 +66,24 @@ public class Main_21611 {
 						isEnd = true;
 						break;
 					}
-					
-					System.out.println(ci + " " + cj + " " + map[ci][cj]);
+					if(cNum != map[ci][cj]) {
+						if(cNumCount > 4) {
+							for(int tempcnt = 0; tempcnt < cNumCount; tempcnt++) {
+								queue.poll();
+							}
+							
+						} else {
+							pNum = cNum;
+							pNumCount = cNumCount;
+							cNum = map[ci][cj];
+							cNumCount = 1;
+						}
+						
+					} else if(cNum == map[ci][cj]) {
+						cNumCount++;
+					}
+					queue.add(map[ci][cj]);
+//					System.out.println(ci + " " + cj + " " + map[ci][cj]);
 				}
 				
 				cnt++;
